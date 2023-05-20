@@ -10,6 +10,9 @@ const Profile = ({ user, setUser }) => {
 		localStorage.removeItem("dogUser")
 		localStorage.removeItem("dogUserId")
 		localStorage.removeItem("dogToken")
+		localStorage.removeItem("discountProducts")
+		localStorage.removeItem("newProducts")
+		localStorage.removeItem("saleProducts")
 		navigate("/")
 	}
 	return (<div className="profile">

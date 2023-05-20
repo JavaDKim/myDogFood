@@ -8,7 +8,7 @@ const Main = ({ dogToken }) => {
 	const saleArr = JSON.parse(localStorage.getItem("saleProducts"))
 	return (<>
 		<Promo {...PROMOARR[0]} />
-		{newArr.map((e, i) =>
+		{newArr?.map((e, i) =>
 			i < 8
 				?
 				<Card img={e.pictures} key={i} {...e} dogToken={dogToken} />
@@ -17,7 +17,7 @@ const Main = ({ dogToken }) => {
 		<div className="promoGroup"><Promo {...PROMOARR[1]} />
 			<Promo {...PROMOARR[2]} />
 		</div>
-		{discountArr.map((e, i) =>
+		{discountArr?.map((e, i) =>
 			i < 12
 				?
 				<Card img={e.pictures} key={i} {...e} dogToken={dogToken} />
