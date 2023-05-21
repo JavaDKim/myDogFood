@@ -4,7 +4,7 @@ import { Link } from "react-router-dom";
 import { Heart, HeartFill } from "react-bootstrap-icons";
 import saleIcon from "../../assets/images/icons/sale.png"
 import newIcon from "../../assets/images/icons/new.png"
-const Card = ({ img, name, price, _id, discount, tags, likes, dogToken, setServerProduct }) => {
+const Card = ({ img, name, price, _id, discount, tags, likes, dogToken, setSrvProducts }) => {
 	const userLike = likes.includes(localStorage.getItem("dogUserId"))
 	const [isLike, setIsLike] = useState(userLike)
 
@@ -18,15 +18,17 @@ const Card = ({ img, name, price, _id, discount, tags, likes, dogToken, setServe
 				headers: { "Authorization": `Bearer ${dogToken}` }
 			})
 			.then(res => res.json())
-			.then(data => {
-				setServerProduct((old) => {
-					console.log(data);
-					const arr = old.map((e) => {
-						if (e._id === _id) { return data } else { return old }
+/* 			.then(data => {
+				setSrvProducts((old) => {
+					const arr = old?.map((e) => {
+						if (e._id === _id) {
+
+							return { data }
+						} else { return { old } }
 					})
 					return arr
 				})
-			})
+			}) */
 			/* 			setServerProducts(function (prev) {
 				const arr = prev.map((e) => { if (e._id === _id) { return data } else { return prev } })
 				return arr

@@ -10,8 +10,8 @@ const App = () => {
 	const [user, setUser] = useState(localStorage.getItem("dogUser"))
 	const [dogToken, setDogToken] = useState(localStorage.getItem("dogToken"))
 	const [modalAcive, setModalActive] = useState(false)
-	const [serverProducts, setServerProducts] = useState([]);
-	const [products, setProducts] = useState(serverProducts)
+	const [serverProducts, setSrvProducts] = useState([]);
+	const [products, setProducts] = useState(setSrvProducts)
 	let discountProducts = [] //массив с дисконтными товарами
 	let newProducts = [] //массив с новинками
 	let saleProducts = [] //массив распродаж
@@ -22,7 +22,7 @@ const App = () => {
 				{ headers: { "Authorization": `Bearer ${dogToken}` } })
 				.then(res => res.json())
 				.then(data => {
-					setServerProducts(data.products)
+					setSrvProducts(data.products.sort((a, b) => new Date(b.created_at).getTime() - new Date(a.created_at).getTime()))
 					//выбираем все товары со скидкой
 					data.products.map((e) => { return e.discount > 0 ? discountProducts.push(e) : "" });
 					discountProducts.sort((a, b) => a.discount < b.discount ? 1 : -1)
@@ -39,20 +39,23 @@ const App = () => {
 
 	useEffect(() => {
 		setProducts(serverProducts)
+
 	}, [serverProducts])
 
 	useEffect(() => {
 		if (user) {
 			setDogToken(localStorage.getItem("dogToken"))
+			setUser(localStorage.getItem("dogUserId"));
 		} else {
 			setDogToken("")
+			setUser("")
 		}
 	}, [user])
 	return (
 		<>
 			<Nav user={user} prodArr={serverProducts} setProducts={setProducts} />
 			<Header user={user} setUser={setUser} setModalActive={setModalActive} />
-			<DogfoodRoutes products={products} setServerProduct={setServerProducts} user={user} setUser={setUser} dogToken={dogToken} />
+			<DogfoodRoutes products={products} setSrvProducts1={setSrvProducts} user={user} setUser={setUser} dogToken={dogToken} />
 			<Footer user={user} />
 			<Modal active={modalAcive} setActive={setModalActive} setUser={setUser} />
 		</>
