@@ -20,7 +20,7 @@ const Main = ({ dogToken }) => {
 		{discountArr?.map((e, i) =>
 			i < 12
 				?
-				<Card img={e.pictures} key={i} {...e} dogToken={dogToken} />
+				<Card img={e.pictures} key={i + 1} {...e} dogToken={dogToken} />
 				: <></>
 		)}
 	</>

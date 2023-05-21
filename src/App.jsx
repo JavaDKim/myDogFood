@@ -12,7 +12,6 @@ const App = () => {
 	const [modalAcive, setModalActive] = useState(false)
 	const [serverProducts, setServerProducts] = useState([]);
 	const [products, setProducts] = useState(serverProducts)
-	//const discountProducts = []			//массив с товарами со скидкой
 	let discountProducts = [] //массив с дисконтными товарами
 	let newProducts = [] //массив с новинками
 	let saleProducts = [] //массив распродаж
@@ -34,7 +33,6 @@ const App = () => {
 					//выбираем все товары распродажи
 					data.products.map((e) => { return e.tags.includes("sale") ? saleProducts.push(e) : "" });
 					localStorage.setItem("saleProducts", JSON.stringify(saleProducts));
-
 				})
 		}
 	}, [dogToken])
@@ -54,7 +52,7 @@ const App = () => {
 		<>
 			<Nav user={user} prodArr={serverProducts} setProducts={setProducts} />
 			<Header user={user} setUser={setUser} setModalActive={setModalActive} />
-			<DogfoodRoutes products={products} user={user} setUser={setUser} dogToken={dogToken} />
+			<DogfoodRoutes products={products} setServerProduct={setServerProducts} user={user} setUser={setUser} dogToken={dogToken} />
 			<Footer user={user} />
 			<Modal active={modalAcive} setActive={setModalActive} setUser={setUser} />
 		</>
