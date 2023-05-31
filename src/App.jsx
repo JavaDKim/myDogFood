@@ -1,9 +1,9 @@
 import { useState, useEffect } from "react"
 import { Header, Nav, Footer } from "./components/General"
-
-
+import 'bootstrap/dist/css/bootstrap.min.css';
 import Modal from "./components/Modal"
 import DogfoodRoutes from "./routes/DogsfoodRoutes"
+import Context from "./context";
 
 
 const App = () => {
@@ -12,11 +12,15 @@ const App = () => {
 	const [modalAcive, setModalActive] = useState(false)
 	const [serverProducts, setSrvProducts] = useState([]);
 	const [products, setProducts] = useState(setSrvProducts)
+	const [discountSrvProd, setDiscountSrvProd] = useState([]);
+	const [newSrvProd, setNewSrvProd] = useState([]);
+	const [saleSrvProd, setSaleSrvProd] = useState([]);
 	let discountProducts = [] //массив с дисконтными товарами
 	let newProducts = [] //массив с новинками
 	let saleProducts = [] //массив распродаж
 	useEffect(() => {
 		if (dogToken) {
+
 			fetch(
 				"https://api.react-learning.ru/products",
 				{ headers: { "Authorization": `Bearer ${dogToken}` } })
@@ -26,20 +30,19 @@ const App = () => {
 					//выбираем все товары со скидкой
 					data.products.map((e) => { return e.discount > 0 ? discountProducts.push(e) : "" });
 					discountProducts.sort((a, b) => a.discount < b.discount ? 1 : -1)
-					localStorage.setItem("discountProducts", JSON.stringify(discountProducts));
+					setDiscountSrvProd(discountProducts)
 					//выбираем все товары новинки
 					data.products.map((e) => { return e.tags.includes("new") ? newProducts.push(e) : "" });
-					localStorage.setItem("newProducts", JSON.stringify(newProducts));
+					setNewSrvProd(newProducts)
 					//выбираем все товары распродажи
 					data.products.map((e) => { return e.tags.includes("sale") ? saleProducts.push(e) : "" });
-					localStorage.setItem("saleProducts", JSON.stringify(saleProducts));
+					setSaleSrvProd(saleProducts)
 				})
 		}
 	}, [dogToken])
 
 	useEffect(() => {
 		setProducts(serverProducts)
-
 	}, [serverProducts])
 
 	useEffect(() => {
@@ -52,13 +55,22 @@ const App = () => {
 		}
 	}, [user])
 	return (
-		<>
-			<Nav user={user} prodArr={serverProducts} setProducts={setProducts} />
+		<Context.Provider value={{
+			products,
+			setProducts,
+			serverProducts,
+			setSrvProducts,
+			saleSrvProd,
+			newSrvProd,
+			discountSrvProd,
+			dogToken
+		}}>
+			<Nav user={user} /* prodArr={serverProducts} setProducts={setProducts} */ />
 			<Header user={user} setUser={setUser} setModalActive={setModalActive} />
-			<DogfoodRoutes products={products} setSrvProducts1={setSrvProducts} user={user} setUser={setUser} dogToken={dogToken} />
+			<DogfoodRoutes products={products} setSrvProducts={setSrvProducts} user={user} setUser={setUser} />
 			<Footer user={user} />
 			<Modal active={modalAcive} setActive={setModalActive} setUser={setUser} />
-		</>
+		</Context.Provider>
 	);
 
 

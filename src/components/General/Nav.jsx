@@ -9,7 +9,7 @@ import {
 } from "react-bootstrap-icons";
 import SearchProd from "../Search";
 
-const Nav = ({ prodArr, setProducts, user }) => {
+const Nav = ({ user }) => {
 	return (
 		<div className='navigation'>
 			<Link to="mailto:info@foodi24.ru"><EnvelopePlusFill />&nbsp;<span>info@foodi24.ru</span></Link>
@@ -21,7 +21,7 @@ const Nav = ({ prodArr, setProducts, user }) => {
 			<Link to="#"><GeoAltFill />&nbsp;<span>г. Ростов-на-Дону, ул. Зорге д. 9</span></Link>
 			{!user && <span style={{ visibility: "hidden" }}></span>}
 			{user && <span style={{ visibility: "visible" }}>
-				<SearchProd prodArr={prodArr} setProducts={setProducts} />
+				<SearchProd />
 			</span>}
 		</div>
 	);

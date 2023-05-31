@@ -6,15 +6,15 @@ import Profile from "../pages/Profile"
 import Product from "../pages/Product"
 
 
-const DogfoodRoutes = ({ products, user, setUser, dogToken, setSrvProducts1 }) => {
+const DogfoodRoutes = ({ products, user, setUser, setSrvProducts }) => {
 	return (
 		<main>
 			<div className="containerGrid">
 				<Routes>
-					<Route path="/" element={<Main dogToken={dogToken} setSrvProducts={setSrvProducts1} />} />
-					<Route path="/catalog" element={<Catalog products={products} setSrvProducts={setSrvProducts1} dogToken={dogToken} />} />
+					<Route path="/" element={<Main />} />
+					<Route path="/catalog" element={<Catalog products={products} setSrvProducts={setSrvProducts} />} />
 					<Route path="/profile" element={<Profile user={user} setUser={setUser} />} />
-					<Route path="/product/:id" element={<Product dogToken={dogToken} />} />
+					<Route path="/product/:id" element={<Product />} />
 				</Routes>
 			</div>
 		</main >

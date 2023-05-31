@@ -56,13 +56,36 @@ main {
 .product img{
 	width: 500px;
 }
+.cntProduct .row {
+	margin-bottom: 15px;
+}
+
+.inputCount{
+	display: inline-flex;
+	width: 100px;
+}
+.btnCount{
+
+}
+.card-body{
+	color:#000000
+}
+.card-link{
+	color:blue
+}
+
+.starRate svg{
+width: auto;
+font-size: 20px;
+margin-left: 5px;
+color: goldenrod;
+}
+.starAuthor{
+	font-weight: 500;
+}
  @media screen and (max-width: 576px)  {
 	.product img{
 		width: 200px;
 	}
 } 
-/*
- 
-.container .search-block {
-  grid-column-end: span 4;
-} */
+

@@ -1,6 +1,7 @@
 export const VK = "http://vk.com/dogfoodsrnd";
 export const TG = "http://t.me/dogfoodsrnd";
 export const PROMOARR = [{
+	id: 1,
 	title: "Акция",
 	body: "Скидка на сухие корма фирмы РОЯЛЬ до 50%",
 	footer: "Акция не действительна и размещена с целью верстки макета",
@@ -13,6 +14,7 @@ export const PROMOARR = [{
 	heightPromoCard: "300px"
 },
 {
+	id: 2,
 	title: "Только в Мае",
 	body: "При покупке 1й пачки получите 2ю в подарок!",
 	footer: "Акция не действительна и размещена с целью верстки макета",
@@ -24,6 +26,7 @@ export const PROMOARR = [{
 	heightPromoCard: "250px"
 },
 {
+	id: 3,
 	title: "Скидка",
 	body: "-15% на косточки",
 	footer: "Акция не действительна и размещена с целью верстки макета",
