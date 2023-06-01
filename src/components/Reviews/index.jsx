@@ -1,8 +1,9 @@
-import { useState, useContext, useEffect } from "react";
+import { useState, useEffect, useContext } from "react";
 import Loader from "../Loader";
 import { Star, StarFill } from "react-bootstrap-icons";
 import { Row, Col, Form, Button, Card } from "react-bootstrap";
 import Context from "../../context";
+import ReviewsMap from "./ReviewsMap";
 
 
 
@@ -10,25 +11,30 @@ const ReviewsBlock = ({ product, setProduct }) => {
 	const { dogToken } = useContext(Context)
 	const [reviews, setReviews] = useState(product.reviews)
 	const [textReviews, setTextReviews] = useState("")
+	const [rate, setRate] = useState(0)
 
 
 	const textReview = (e) => {
+		e.preventDefault()
 		let val = e.target.value
 		setTextReviews(val)
 	}
 	useEffect(() => {
 		setReviews(product?.reviews)
-	}, []);
-	console.log(product?._id);
+	}, [product]);
+
+	/* console.log(product.author._id); 
+	console.log(product);
 	console.log(dogToken);
 	console.log(textReviews);
-	console.log(reviews);
+	console.log(reviews);*/
+	console.log(reviews)
 
 	const addReviews = async (e) => {
 		e.preventDefault()
-		let body = { text: textReviews }
+		let body = { text: textReviews, rating: rate }
 
-		let res = await fetch(`https://api.react-learning.ru/products/review/${product._id}`,
+		let res = await fetch(`https://api.react-learning.ru/products/review/${product?._id}`,
 			{
 				method: "POST",
 				headers: {
@@ -39,8 +45,10 @@ const ReviewsBlock = ({ product, setProduct }) => {
 			})
 		let data = await res.json()
 		setProduct(data)
+		setTextReviews("")
+		setRate(0)
 		setReviews(data.reviews)
-		console.log(data);
+
 	}
 
 	return (
@@ -54,30 +62,13 @@ const ReviewsBlock = ({ product, setProduct }) => {
 					<Card.Body>
 						<Form.Control as="textarea" rows={3} onChange={textReview} style={{ padding: "0", marginBottom: "10px" }} />
 						<Form.Label >Поставьте рейтинг</Form.Label>
-						<Row className="starRate d-flex justify-content-center"><Star /><Star /><Star /><Star /><Star /></Row>
+						<Row className="starRate d-flex justify-content-center">
+							<Form.Control type="number" placeholder={0} value={rate} max={5} min={0} onChange={(e) => setRate(e.currentTarget.value)} />
+						</Row>
 						<Button variant="primary" onClick={addReviews}>Сохранить</Button>
 					</Card.Body>
 				</Card>
-				{reviews.map((e) => {
-					return (<Card key={e._id}>
-						<Row style={{ margin: "3px" }}>
-							{e.rating === 5 ? <Row className="starRate"><StarFill /><StarFill /><StarFill /><StarFill /><StarFill /></Row> :
-								e.rating === 4 ? <Row className="starRate"><StarFill /><StarFill /><StarFill /><StarFill /><Star /></Row> :
-									e.rating === 3 ? <Row className="starRate"><StarFill /><StarFill /><StarFill /><Star /><Star /></Row> :
-										e.rating === 2 ? <Row className="starRate"><StarFill /><StarFill /><Star /><Star /><Star /></Row> :
-											e.rating === 1 ? <Row className="starRate"><StarFill /><Star /><Star /><Star /><Star /></Row> :
-												<Row className="starRate"><Star /><Star /><Star /><Star /><Star /></Row>
-							}
-						</Row>
-						<Row className="starAuthor" style={{ margin: "3px" }}>
-							{e.author.name}&nbsp;&nbsp;&nbsp; от &nbsp;
-							{e.updated_at.split("T")[0]}
-						</Row >
-						<Row style={{ margin: "3px" }}>
-							{e.text}
-						</Row></Card>)
-				}
-				)}
+				<ReviewsMap reviews={reviews} product={product} setProduct={setProduct} />
 			</Col>
 		</Row >
 	);

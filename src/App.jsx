@@ -63,7 +63,8 @@ const App = () => {
 			saleSrvProd,
 			newSrvProd,
 			discountSrvProd,
-			dogToken
+			dogToken,
+			user
 		}}>
 			<Nav user={user} /* prodArr={serverProducts} setProducts={setProducts} */ />
 			<Header user={user} setUser={setUser} setModalActive={setModalActive} />
