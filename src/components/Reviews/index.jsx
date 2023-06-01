@@ -4,14 +4,15 @@ import { Star, StarFill } from "react-bootstrap-icons";
 import { Row, Col, Form, Button, Card } from "react-bootstrap";
 import Context from "../../context";
 import ReviewsMap from "./ReviewsMap";
-
+import { useParams } from "react-router-dom"
 
 
 const ReviewsBlock = ({ product, setProduct }) => {
 	const { dogToken } = useContext(Context)
 	const [reviews, setReviews] = useState(product.reviews)
 	const [textReviews, setTextReviews] = useState("")
-	const [rate, setRate] = useState(0)
+	const [rate, setRate] = useState(5)
+	const { id } = useParams()
 
 
 	const textReview = (e) => {
@@ -34,7 +35,7 @@ const ReviewsBlock = ({ product, setProduct }) => {
 		e.preventDefault()
 		let body = { text: textReviews, rating: rate }
 
-		let res = await fetch(`https://api.react-learning.ru/products/review/${product?._id}`,
+		let res = await fetch(`https://api.react-learning.ru/products/review/${id}`,
 			{
 				method: "POST",
 				headers: {
@@ -52,18 +53,18 @@ const ReviewsBlock = ({ product, setProduct }) => {
 	}
 
 	return (
-		<Row>
+		<Row >
 			{/* блок отзывов */}
 			<Col xs={12} md={1}></Col>
 			<Col xs={12} md={6}>
-				<h3 style={{ marginBottom: "20px" }}>Отзывы</h3>
-				<Card>
-					<Card.Header>Добавить отзыв</Card.Header>
+				<h3 className="d-flex justify-content-center justify-content-md-start" style={{ marginBottom: "20px" }}>Отзывы</h3>
+				<Card style={{ padding: "0", marginBottom: "10px" }}>
+					<Card.Header >Добавить отзыв</Card.Header>
 					<Card.Body>
 						<Form.Control as="textarea" rows={3} onChange={textReview} style={{ padding: "0", marginBottom: "10px" }} />
 						<Form.Label >Поставьте рейтинг</Form.Label>
 						<Row className="starRate d-flex justify-content-center">
-							<Form.Control type="number" placeholder={0} value={rate} max={5} min={0} onChange={(e) => setRate(e.currentTarget.value)} />
+							<Form.Control type="number" placeholder={5} value={rate} max={5} min={1} onChange={(e) => setRate(e.currentTarget.value)} />
 						</Row>
 						<Button variant="primary" onClick={addReviews}>Сохранить</Button>
 					</Card.Body>

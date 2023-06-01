@@ -47,8 +47,7 @@ const Product = () => {
 				</Col>
 				<Col xs={12} md={4}>
 					<Row >
-						<h3 className="card_price">
-
+						<h3 className="card_price d-flex justify-content-center justify-content-md-start">
 							{product.discount > 0
 								?
 								<>
@@ -63,14 +62,15 @@ const Product = () => {
 							}&nbsp;
 							р.</h3>
 					</Row>
-					<Row >
-						<Form.Group className="d-flex align-items-center">
+					<Row>
+						<Form.Group className="d-flex align-items-center justify-content-center justify-content-md-start">
 							<FormLabel>Введите<br />количество:&nbsp;</FormLabel>
 							<Form.Control className="inputCount" type="number" placeholder="0" />
-							<Button variant="success" className="btnCount" size="xs">Купить</Button>
+							<Button variant="success" className
+								="btnCount" size="xs">Купить</Button>
 						</Form.Group>
 					</Row>
-					<Row >
+					<Row className="d-flex justify-content-center justify-content-md-start" >
 						<Card variant="primary" style={{ width: '18rem' }}>
 							<Card.Body>
 								<Card.Title>Доставка &nbsp;<Truck /></Card.Title>
@@ -88,29 +88,16 @@ const Product = () => {
 					</Row>
 				</Col>
 			</Row>
-			<Row>
+			<Row >
 				<Col xs={12} md={1}></Col>
 				<Col xs={12} md={11}>
-					<h3 style={{ marginBottom: "10px" }}>Описание</h3>
+					<h3 className="d-flex justify-content-center justify-content-md-start" style={{ marginBottom: "10px" }}>Описание</h3>
 					<Row style={{ margin: "0" }}>{product.description}</Row>
 				</Col>
 			</Row>
 			<ReviewsBlock product={product} setProduct={setProduct} />
 
 		</Container >
-		/* 		<div className="product">
-					{!product.name
-						?
-						<Loader />
-						:
-						<>
-							<h1>
-								{product.name}
-							</h1>
-							{<img src={product.pictures} alt={product.name} />}
-							{<mark>{product.price}</mark>}</>
-					}
-				</div> */
 	);
 }
 

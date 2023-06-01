@@ -10,9 +10,9 @@ const ReviewsMap = ({ reviews, product, setProduct }) => {
 	}
 
 	return (
-		<>
+		<Row className="d-flex justify-content-center justify-content-md-start" style={{ padding: "10px", marginBottom: "10px" }}>
 			{reviews?.map((e) => {
-				return (<Card key={e._id}>
+				return (<Card>
 					<Row style={{ margin: "3px" }}>
 						{e.rating === 5 ? <Row className="starRate"><StarFill /><StarFill /><StarFill /><StarFill /><StarFill /></Row> :
 							e.rating === 4 ? <Row className="starRate"><StarFill /><StarFill /><StarFill /><StarFill /><Star /></Row> :
@@ -47,7 +47,7 @@ const ReviewsMap = ({ reviews, product, setProduct }) => {
 				</Card>)
 			}
 			)}
-		</>
+		</Row>
 	);
 }
 
