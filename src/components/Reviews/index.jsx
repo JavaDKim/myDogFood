@@ -29,7 +29,7 @@ const ReviewsBlock = ({ product, setProduct }) => {
 	console.log(dogToken);
 	console.log(textReviews);
 	console.log(reviews);*/
-	console.log(reviews)
+
 
 	const addReviews = async (e) => {
 		e.preventDefault()

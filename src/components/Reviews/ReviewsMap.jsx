@@ -4,10 +4,8 @@ import { Row, Col, Form, Button, Card } from "react-bootstrap";
 import Context from "../../context";
 
 const ReviewsMap = ({ reviews, product, setProduct }) => {
-	const { user, dogToken } = useContext(Context)
-	const delReview = async (e) => {
-		/*  */
-	}
+	const { userId, dogToken } = useContext(Context)
+
 
 	return (
 		<Row className="d-flex justify-content-center justify-content-md-start" style={{ padding: "10px", marginBottom: "10px" }}>
@@ -29,7 +27,7 @@ const ReviewsMap = ({ reviews, product, setProduct }) => {
 					<Row style={{ margin: "3px" }}>
 						{e.text}
 					</Row>
-					{e.author._id === user &&
+					{e.author._id === userId &&
 						<Button variant="danger" onClick={async (el) => {
 							el.preventDefault()
 							let res = await fetch(`https://api.react-learning.ru/products/review/${product._id}/${e._id}`,

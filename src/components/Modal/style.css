@@ -11,6 +11,20 @@ display: flex;
 justify-content: center;
 align-items: center;
 }
+.modal_window_prod{
+
+	background-color: rgb(255, 255, 255);
+	top:0;
+	bottom: 0;
+	left: 0;
+	right: 0;
+	backdrop-filter: blur(1px)
+	grayscale(50%);
+	display: flex;
+	justify-content: center;
+	align-items: center;
+
+}
 .modal_inside{
 	max-width: calc(100%-40px);
 	max-height: calc(100%-40px);
@@ -19,7 +33,17 @@ align-items: center;
 	padding: 20px;
 	box-sizing: border-box;
 	border-radius: 4px;
+	overflow-y: auto;
+}
+.modal_inside_prod{
+	max-width: calc(100%-40px);
+	width: 400px;
+	background-color: rgb(146, 179, 208);
+	padding: 20px;
+	box-sizing: border-box;
+	border-radius: 4px;
 	position: relative;
+	overflow-y: auto;
 }
 .modal_button{
 	position: absolute;

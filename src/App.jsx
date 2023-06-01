@@ -4,17 +4,21 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import Modal from "./components/Modal"
 import DogfoodRoutes from "./routes/DogsfoodRoutes"
 import Context from "./context";
+import ModalProd from "./components/Modal/ModalProd";
 
 
 const App = () => {
 	const [user, setUser] = useState(localStorage.getItem("dogUser"))
 	const [dogToken, setDogToken] = useState(localStorage.getItem("dogToken"))
+	const [userId, setUserId] = useState(localStorage.getItem("dogUserId"))
 	const [modalAcive, setModalActive] = useState(false)
+	const [modalAciveProduct, setModalActiveProduct] = useState(false)
 	const [serverProducts, setSrvProducts] = useState([]);
 	const [products, setProducts] = useState(setSrvProducts)
 	const [discountSrvProd, setDiscountSrvProd] = useState([]);
 	const [newSrvProd, setNewSrvProd] = useState([]);
 	const [saleSrvProd, setSaleSrvProd] = useState([]);
+	const [product, setProduct] = useState({})
 	let discountProducts = [] //массив с дисконтными товарами
 	let newProducts = [] //массив с новинками
 	let saleProducts = [] //массив распродаж
@@ -48,7 +52,7 @@ const App = () => {
 	useEffect(() => {
 		if (user) {
 			setDogToken(localStorage.getItem("dogToken"))
-			setUser(localStorage.getItem("dogUserId"));
+			setUser(localStorage.getItem("dogUser"));
 		} else {
 			setDogToken("")
 			setUser("")
@@ -64,13 +68,24 @@ const App = () => {
 			newSrvProd,
 			discountSrvProd,
 			dogToken,
-			user
+			user,
+			setUser,
+			userId,
+			setModalActiveProduct,
+			setDogToken,
+			setUserId,
+			setDiscountSrvProd,
+			setNewSrvProd,
+			setSaleSrvProd,
+			product, setProduct
 		}}>
 			<Nav user={user} /* prodArr={serverProducts} setProducts={setProducts} */ />
 			<Header user={user} setUser={setUser} setModalActive={setModalActive} />
 			<DogfoodRoutes products={products} setSrvProducts={setSrvProducts} user={user} setUser={setUser} />
+			<ModalProd active={modalAciveProduct} setModalActiveProduct={setModalActiveProduct} />
 			<Footer user={user} />
-			<Modal active={modalAcive} setActive={setModalActive} setUser={setUser} />
+			<Modal active={modalAcive} setActive={setModalActive} />
+
 		</Context.Provider>
 	);
 

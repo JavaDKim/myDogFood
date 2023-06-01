@@ -1,8 +1,10 @@
-import { useState } from "react";
+import { useState, useContext } from "react";
 import "./style.css"
 import { Link } from "react-router-dom";
 import { XCircle } from "react-bootstrap-icons";
-const Modal = ({ active, setActive, setUser }) => {
+import context from "../../context";
+const Modal = ({ active, setActive }) => {
+	const { setUser, setUserId, setDogToken } = useContext(context)
 	const [auth, setAuth] = useState(true)
 	const [name, setName] = useState("")
 	const [email, setEmail] = useState("")
@@ -62,6 +64,8 @@ const Modal = ({ active, setActive, setUser }) => {
 					localStorage.setItem("dogToken", dataLog.token)
 					localStorage.setItem("dogUserId", dataLog.data._id)
 					setUser(dataLog.data.name)
+					setDogToken(dataLog.token)
+					setUserId(dataLog.data._id)
 					clearForm()
 					setActive(false)
 				}
@@ -72,8 +76,9 @@ const Modal = ({ active, setActive, setUser }) => {
 					localStorage.setItem("dogUser", data.data.name)
 					localStorage.setItem("dogUserId", data.data._id)
 					localStorage.setItem("dogToken", data.token)
-
 					setUser(data.data.name)
+					setDogToken(data.token)
+					setUserId(data.data._id)
 					clearForm()
 					setActive(false)
 				}

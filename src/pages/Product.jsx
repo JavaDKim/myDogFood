@@ -1,26 +1,37 @@
 import { useState, useEffect, useContext } from "react";
-import { useParams } from "react-router-dom"
+import { useParams, Link, useNavigate } from "react-router-dom"
 import Loader from "../components/Loader";
-import { Truck, Star, StarFill } from "react-bootstrap-icons";
+import { Truck, BoxArrowInRight, PencilFill, Trash2Fill, TrashFill } from "react-bootstrap-icons";
 import { Container, Row, Col, Form, Button, Card, FormLabel } from "react-bootstrap";
 import Context from "../context";
 import ReviewsBlock from "../components/Reviews";
 
 const Product = () => {
-	const { dogToken } = useContext(Context)
-	const [product, setProduct] = useState({})
+	const { product, setProduct, dogToken, setSrvProducts, userId, setModalActiveProduct } = useContext(Context)
 	const { id } = useParams()
-
+	const navigate = useNavigate()
+	const deleteProd = () => {
+		fetch(`https://api.react-learning.ru/products/${id}`,
+			{ method: "DELETE", headers: { "Authorization": `Bearer ${dogToken}` } })
+			.then(res => res.json())
+			.then(data => {
+				setSrvProducts(function (old) {
+					const arr = old.filter(el => el._id !== id)
+					return arr;
+				})
+			}
+			)
+		setProduct({})
+		navigate(`/catalog`)
+	}
 
 	useEffect(() => {
 		fetch(`https://api.react-learning.ru/products/${id}`,
 			{ headers: { "Authorization": `Bearer ${dogToken}` } })
 			.then(res => res.json())
-			.then(data => {
-				setProduct(data)
-			}
-			)
-	}, [])
+			.then(data => setProduct(data))
+	}
+		, [])
 
 	return (
 		<Container className="cntProduct" fluid style={{ gridColumn: "1/5" }}>
@@ -31,11 +42,11 @@ const Product = () => {
 						?
 						<Loader />
 						:
-						<>
-							<h2>
+						<Row>
+							<h2 className="d-flex justify-content-center justify-content-md-start">
 								{product.name}
 							</h2>
-						</>
+						</Row>
 					}
 				</Col>
 			</Row>
@@ -48,6 +59,7 @@ const Product = () => {
 				<Col xs={12} md={4}>
 					<Row >
 						<h3 className="card_price d-flex justify-content-center justify-content-md-start">
+							<span>цена: &nbsp;</span>
 							{product.discount > 0
 								?
 								<>
@@ -59,6 +71,7 @@ const Product = () => {
 								</>
 								:
 								product.price
+
 							}&nbsp;
 							р.</h3>
 					</Row>
@@ -85,6 +98,18 @@ const Product = () => {
 								<Card.Link href="#">условия доставки</Card.Link>
 							</Card.Body>
 						</Card>
+					</Row>
+					{/* кнопки удаления и редактирования */}
+					<Row className="d-flex justify-content-center justify-content-md-start" >
+						{userId === product.author?._id ?
+							<Card style={{ width: '18rem', backgroundColor: "lightgrey" }}>
+								<Link to="/prod_edit" title="Профиль" onClick={() => setModalActiveProduct(true)}>
+									<PencilFill /> <span>Редактировать товар</span>
+								</Link>
+								<Button variant="link" onClick={deleteProd} style={{ color: "crimson", textDecoration: 'none' }}><TrashFill />&nbsp;Удалить</Button>
+
+							</Card>
+							: <> </>}
 					</Row>
 				</Col>
 			</Row>
