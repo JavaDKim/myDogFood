@@ -4,7 +4,7 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import Modal from "./components/Modal"
 import DogfoodRoutes from "./routes/DogsfoodRoutes"
 import Context from "./context";
-import ModalProd from "./components/Modal/ModalProd";
+import ModalProd from "./components/Modal/ModalEdit";
 
 
 const App = () => {
@@ -71,6 +71,7 @@ const App = () => {
 			user,
 			setUser,
 			userId,
+			modalAciveProduct,
 			setModalActiveProduct,
 			setDogToken,
 			setUserId,
@@ -82,7 +83,6 @@ const App = () => {
 			<Nav user={user} /* prodArr={serverProducts} setProducts={setProducts} */ />
 			<Header user={user} setUser={setUser} setModalActive={setModalActive} />
 			<DogfoodRoutes products={products} setSrvProducts={setSrvProducts} user={user} setUser={setUser} />
-			<ModalProd active={modalAciveProduct} setModalActiveProduct={setModalActiveProduct} />
 			<Footer user={user} />
 			<Modal active={modalAcive} setActive={setModalActive} />
 

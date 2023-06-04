@@ -6,6 +6,7 @@ import {
 	Cart4,
 	PersonSquare,
 	BoxArrowInRight,
+	FileEarmarkPlus
 } from "react-bootstrap-icons";
 
 
@@ -21,6 +22,9 @@ const Header = ({ user, setUser, setModalActive }) => {
 		<Logo />
 		<nav className="header__menu">
 			{user && <>
+				<Link to="/add" title="Каталог">
+					<FileEarmarkPlus /> <span>Добавить</span>
+				</Link>
 				<Link to="/catalog" title="Каталог">
 					<CardHeading /> <span>Каталог</span>
 				</Link>

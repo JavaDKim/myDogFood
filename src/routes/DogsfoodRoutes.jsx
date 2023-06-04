@@ -4,7 +4,8 @@ import Main from "../pages/Main"
 import Catalog from "../pages/Catalog"
 import Profile from "../pages/Profile"
 import Product from "../pages/Product"
-import ModalProd from "../components/Modal/ModalProd"
+import ModalProd from "../components/Modal/ModalEdit"
+import ModalAdd from "../components/Modal/ModalAdd"
 
 
 const DogfoodRoutes = ({ products, user, setUser, setSrvProducts }) => {
@@ -16,6 +17,7 @@ const DogfoodRoutes = ({ products, user, setUser, setSrvProducts }) => {
 					<Route path="/catalog" element={<Catalog products={products} setSrvProducts={setSrvProducts} />} />
 					<Route path="/profile" element={<Profile />} />
 					<Route path="/prod_edit" element={<ModalProd />} />
+					<Route path="/add" element={<ModalProd />} />
 					<Route path="/product/:id" element={<Product />} />
 				</Routes>
 			</div>

@@ -2,9 +2,10 @@ import { React, useState, useContext, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Button, Form, Row, Container, Image, ButtonGroup } from 'react-bootstrap';
 import Context from '../../context';
-const ModalProd = ({ active, setModalActiveProduct }) => {
+const ModalProd = () => {
 	const navigate = useNavigate()
-	const { product, dogToken, setSrvProducts } = useContext(Context)
+	const { product, dogToken, setSrvProducts, modalActiveProduct, setModalActiveProduct } = useContext(Context)
+	const active = { modalActiveProduct };
 	console.log({ product });
 	const [nameP, setNameP] = useState("")
 	const [imgP, setImgP] = useState("")
@@ -75,47 +76,47 @@ const ModalProd = ({ active, setModalActiveProduct }) => {
 	}, [navigate]);
 
 	return (
-		<Container style={{ overflowY: "auto" }}>
+		<Container style={{ gridColumn: "1/5" }}>
 			<Row className="modal_window_prod" style={{ display: active ? "flex" : "none" }}>
-				<Row className="modal_inside_prod">
+				<Row className="modal_inside_prod" >
 					<h2 style={{ marginBottom: "15px" }}>Редактировать</h2>
 
 					<Form>
 						<Form.Group>
 							<Form.Label htmlFor="idName">Наименование продукта</Form.Label>
-							<Form.Control id="idName" type='text' value={nameP} onChange={(e) => setNameP(e.currentTarget.value)} />
+							<Form.Control id="idName" type='text' value={nameP || ""} onChange={(e) => setNameP(e.currentTarget.value)} />
 						</Form.Group>
 						<Form.Group>
 							<Form.Label htmlFor="idImg">Изображение </Form.Label>
 							<Image id='idImg' width={350} src={imgP} rounded />
-							<Form.Control type='url' value={imgP} onChange={(e) => setImgP(`${e.currentTarget.value}`)} />
+							<Form.Control type='url' value={imgP || ""} onChange={(e) => setImgP(`${e.currentTarget.value}`)} />
 						</Form.Group>
 						<Form.Group>
 							<Form.Label htmlFor="idPrice">Цена</Form.Label>
-							<Form.Control id="idPrice" type='number' value={priceP} onChange={(e) => setPriceP(e.currentTarget.value)} />
+							<Form.Control id="idPrice" type='number' value={priceP || ""} onChange={(e) => setPriceP(e.currentTarget.value)} />
 						</Form.Group>
 						<Form.Group>
 							<Form.Label htmlFor="idDiscount">Скидка в процентах</Form.Label>
-							<Form.Control id="idDiscount" type='number' value={discountP} onChange={(e) => setDiscountP(e.currentTarget.value)} />
+							<Form.Control id="idDiscount" type='number' value={discountP || ""} onChange={(e) => setDiscountP(e.currentTarget.value)} />
 						</Form.Group>
 						<Form.Group>
 							<Form.Label htmlFor="idStock">Количество</Form.Label>
-							<Form.Control id="idStock" type='number' value={stockP} onChange={(e) => setStockP(e.currentTarget.value)} />
+							<Form.Control id="idStock" type='number' value={stockP || ""} onChange={(e) => setStockP(e.currentTarget.value)} />
 						</Form.Group>
 						<Form.Group>
 							<Form.Label htmlFor="idWeight">Вес в граммах</Form.Label>
-							<Form.Control id="idWeight" type='text' value={weightP} onChange={(e) => setWeightP(e.currentTarget.value)} />
+							<Form.Control id="idWeight" type='text' value={weightP || ""} onChange={(e) => setWeightP(e.currentTarget.value)} />
 						</Form.Group>
 						<Form.Group>
 							<Form.Label htmlFor="idDescr">Описание</Form.Label>
-							<Form.Control id="idDescr" as='textarea' row={3} value={descrP} onChange={(e) => setDescrP(e.currentTarget.value)} />
+							<Form.Control id="idDescr" as='textarea' row={3} value={descrP || ""} onChange={(e) => setDescrP(e.currentTarget.value)} />
 						</Form.Group>
 						<Form.Group className="my-3">
 							<Form.Label htmlFor="tags">Теги</Form.Label>
 							<Form.Control
 								type="text"
 								id="tags"
-								value={tagP}
+								value={tagP || ""}
 								onChange={(e) => updTag(e.target.value)}
 							/>
 							{tagsP?.length > 0 && <Form.Text>

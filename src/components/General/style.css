@@ -79,6 +79,14 @@ font-size: larger;
 font-weight: bold;
 }
 
+@media screen and (max-width: 1000px)  {
+	.header__menu{
+		font-size: 20px;
+	}
+		.header__menu span{
+		font-size: 15px;
+	}
+}
 @media screen and (max-width: 900px)  {
 	header {
 		flex-wrap: wrap;
