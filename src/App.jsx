@@ -4,7 +4,7 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import Modal from "./components/Modal"
 import DogfoodRoutes from "./routes/DogsfoodRoutes"
 import Context from "./context";
-import ModalProd from "./components/Modal/ModalEdit";
+import { useNavigate } from "react-router-dom";
 
 
 const App = () => {
@@ -22,6 +22,7 @@ const App = () => {
 	let discountProducts = [] //массив с дисконтными товарами
 	let newProducts = [] //массив с новинками
 	let saleProducts = [] //массив распродаж
+	const navigate = useNavigate()
 	useEffect(() => {
 		if (dogToken) {
 
@@ -43,7 +44,7 @@ const App = () => {
 					setSaleSrvProd(saleProducts)
 				})
 		}
-	}, [dogToken])
+	}, [navigate])
 
 	useEffect(() => {
 		setProducts(serverProducts)

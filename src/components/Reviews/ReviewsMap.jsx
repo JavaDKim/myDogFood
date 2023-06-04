@@ -1,6 +1,6 @@
 import { React, useContext } from 'react';
 import { Star, StarFill } from "react-bootstrap-icons";
-import { Row, Col, Form, Button, Card } from "react-bootstrap";
+import { Row, Button, Card } from "react-bootstrap";
 import Context from "../../context";
 
 const ReviewsMap = ({ reviews, product, setProduct }) => {
@@ -10,7 +10,7 @@ const ReviewsMap = ({ reviews, product, setProduct }) => {
 	return (
 		<Row className="d-flex justify-content-center justify-content-md-start" style={{ padding: "10px", marginBottom: "10px" }}>
 			{reviews?.map((e) => {
-				return (<Card>
+				return (<Card key={e._id}>
 					<Row style={{ margin: "3px" }}>
 						{e.rating === 5 ? <Row className="starRate"><StarFill /><StarFill /><StarFill /><StarFill /><StarFill /></Row> :
 							e.rating === 4 ? <Row className="starRate"><StarFill /><StarFill /><StarFill /><StarFill /><Star /></Row> :

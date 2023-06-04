@@ -1,6 +1,4 @@
 import { useState, useEffect, useContext } from "react";
-import Loader from "../Loader";
-import { Star, StarFill } from "react-bootstrap-icons";
 import { Row, Col, Form, Button, Card } from "react-bootstrap";
 import Context from "../../context";
 import ReviewsMap from "./ReviewsMap";
@@ -33,22 +31,27 @@ const ReviewsBlock = ({ product, setProduct }) => {
 
 	const addReviews = async (e) => {
 		e.preventDefault()
-		let body = { text: textReviews, rating: rate }
+		if (textReviews.trim() !== "" && rate !== 0) {
+			let body = { text: textReviews, rating: rate }
 
-		let res = await fetch(`https://api.react-learning.ru/products/review/${id}`,
-			{
-				method: "POST",
-				headers: {
-					"Content-Type": "application/json",
-					"Authorization": `Bearer ${dogToken}`
-				},
-				body: JSON.stringify(body)
-			})
-		let data = await res.json()
-		setProduct(data)
-		setTextReviews("")
-		setRate(0)
-		setReviews(data.reviews)
+			let res = await fetch(`https://api.react-learning.ru/products/review/${id}`,
+				{
+					method: "POST",
+					headers: {
+						"Content-Type": "application/json",
+						"Authorization": `Bearer ${dogToken}`
+					},
+					body: JSON.stringify(body)
+				})
+			let data = await res.json()
+			setProduct(data)
+			setTextReviews("")
+			setRate(0)
+			setReviews(data.reviews)
+		}
+		else {
+			alert("Заполните поле отзыва, рейтинг не должен быть равен 0")
+		}
 
 	}
 

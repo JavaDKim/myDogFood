@@ -5,7 +5,6 @@ import Catalog from "../pages/Catalog"
 import Profile from "../pages/Profile"
 import Product from "../pages/Product"
 import ModalProd from "../components/Modal/ModalEdit"
-import ModalAdd from "../components/Modal/ModalAdd"
 
 
 const DogfoodRoutes = ({ products, user, setUser, setSrvProducts }) => {
