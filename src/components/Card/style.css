@@ -19,7 +19,18 @@
 	background-color: rgb(166, 235, 191);
 	color: teal;
 	border-radius: 4px;
+	
 }
+
+.card_button_disabled{
+	border: none;
+	outline: none;
+	height: 30px;
+	background-color: rgb(235, 217, 129);
+	color: rgb(219, 11, 126);
+	border-radius: 4px;
+}
+
 .card_button:hover{
 	color: rgb(255, 255, 255);
 	background-color: rgb(38, 194, 97);

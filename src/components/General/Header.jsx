@@ -8,9 +8,22 @@ import {
 	BoxArrowInRight,
 	FileEarmarkPlus
 } from "react-bootstrap-icons";
+import { useEffect, useState, useContext } from "react";
+import Context from "../../context"
 
 
 const Header = ({ user, setUser, setModalActive }) => {
+	const [likeCnt, setLikeCnt] = useState(0);
+	const [basketCnt, setBasketCnt] = useState(0);
+	const { userId, serverProducts, basketArr } = useContext(Context)
+
+	useEffect(() => {
+		setLikeCnt(serverProducts?.filter(el => el.likes.includes(userId)).length)
+	}, [serverProducts]);
+
+	useEffect(() => {
+		setBasketCnt(basketArr?.length)
+	}, [basketArr]);
 
 	const logIn = (e) => {
 		e.preventDefault();
@@ -28,11 +41,13 @@ const Header = ({ user, setUser, setModalActive }) => {
 				<Link to="/catalog" title="Каталог">
 					<CardHeading /> <span>Каталог</span>
 				</Link>
-				<Link to="/" title="Избранное">
-					<Star /> <span>Избранное</span>
+				<Link to="/favorites" title="Избранное" className="badge-el">
+					<Star />
+					<span className="badge-item">{likeCnt}</span>
 				</Link>
-				<Link to="/" title="Корзина">
-					<Cart4 /> <span>Корзина</span>
+				<Link to="/basket" title="Корзина" className="badge-el">
+					<Cart4 />
+					<span className="badge-item">{basketCnt}</span>
 				</Link>
 				<Link to="/profile" title="Профиль">
 					<PersonSquare /> <span>Профиль</span>

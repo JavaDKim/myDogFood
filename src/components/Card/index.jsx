@@ -1,15 +1,32 @@
 import "./style.css"
-import { useState, useContext } from 'react';
+import { useState, useContext, useEffect } from 'react';
 import { Link } from "react-router-dom";
 import { Heart, HeartFill } from "react-bootstrap-icons";
 import saleIcon from "../../assets/images/icons/sale.png"
 import newIcon from "../../assets/images/icons/new.png"
 import Context from "../../context"
 
-const Card = ({ img, name, price, _id, discount, tags, likes, dogToken }) => {
-	const { serverProducts, setSrvProducts } = useContext(Context)
+const Card = ({ img, name, price, _id, discount, tags, likes, dogToken, stock }) => {
+	const { setSrvProducts, setBasketArr, basketArr } = useContext(Context)
 	const userLike = likes?.includes(localStorage.getItem("dogUserId"))
 	const [isLike, setIsLike] = useState(userLike)
+
+	const [basketBtn, setBasketBtn] = useState(true)
+	useEffect(() => {
+		if (basketArr?.findIndex(e => e._id === _id) !== -1) {
+			setBasketBtn(false) /* false это блокировка Кнопки*/
+		}
+	}, [basketArr]);
+
+	const inBasket = (e) => {
+		e.stopPropagation();
+		e.preventDefault()
+		if (stock > 0) {
+			setBasketArr(old => [...old, { _id, name, price, img, stock, discount, stockinBasket: 1 }]);
+		} else {
+			console.log("не достаточно количества");
+		}
+	}
 
 	const updLike = (e) => {
 		e.stopPropagation();
@@ -70,7 +87,9 @@ const Card = ({ img, name, price, _id, discount, tags, likes, dogToken }) => {
 					price
 				}&nbsp;
 				р.</span>
-			<button className="card_button">В корзину</button>
+			{basketBtn ? <button className="card_button" onClick={inBasket}>В корзину</button>
+				: <button className="card_button_disabled" disabled>Есть в корзине</button>}
+
 
 		</Link >
 	);

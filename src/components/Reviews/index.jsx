@@ -46,7 +46,7 @@ const ReviewsBlock = ({ product, setProduct }) => {
 			let data = await res.json()
 			setProduct(data)
 			setTextReviews("")
-			setRate(0)
+			setRate(5)
 			setReviews(data.reviews)
 		}
 		else {

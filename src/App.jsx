@@ -19,6 +19,7 @@ const App = () => {
 	const [newSrvProd, setNewSrvProd] = useState([]);
 	const [saleSrvProd, setSaleSrvProd] = useState([]);
 	const [product, setProduct] = useState({})
+	const [basketArr, setBasketArr] = useState([])
 	let discountProducts = [] //массив с дисконтными товарами
 	let newProducts = [] //массив с новинками
 	let saleProducts = [] //массив распродаж
@@ -79,7 +80,11 @@ const App = () => {
 			setDiscountSrvProd,
 			setNewSrvProd,
 			setSaleSrvProd,
-			product, setProduct
+			product,
+			setProduct,
+			basketArr,
+			setBasketArr
+
 		}}>
 			<Nav user={user} /* prodArr={serverProducts} setProducts={setProducts} */ />
 			<Header user={user} setUser={setUser} setModalActive={setModalActive} />
