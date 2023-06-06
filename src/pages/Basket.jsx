@@ -1,33 +1,18 @@
-import { useContext, useEffect, useState } from 'react';
+import { useContext, useState } from 'react';
 import Context from "../context"
-import { Row, Col, } from 'react-bootstrap';
-import { XCircleFill } from 'react-bootstrap-icons';
+import { Row, Col, Button, } from 'react-bootstrap';
 import BasketProducts from '../components/Basket';
+import { useNavigate } from 'react-router-dom';
 
 
 const Basket = () => {
 	const { basketArr, setBasketArr } = useContext(Context)
 	const [sumPrice, setSumPrice] = useState(0)
-
-	useEffect(() => {
-		setSumPrice(0)
-		basketArr?.map(e => {
-			if (e.discount > 0) {
-				setSumPrice((old) => (old + (e?.price * (100 - e.discount) / 100) * e.stockinBasket));
-			}
-			else {
-				setSumPrice((old) => (old + (e?.price * e.stockinBasket)))
-			}
-		})
-	}, [basketArr]);
-
-
+	const navigate = useNavigate()
 	return (
-		<Row className="basket" style={{ minWidth: "500px", gridColumnStart: "span 4", marginLeft: "10px", justifyContent: "center" }}>
+		<Row className="basket" style={{ minWidth: "527px", gridColumnStart: "span 4", marginLeft: "10px", justifyContent: "center" }}>
 			<Row className='align-items-center mb-2'>
-				<Col xs={5} style={{ fontWeight: "700", fontSize: "18px", textAlign: "end" }}>Корзина</Col>
-				<Col xs={2}></Col>
-				<Col xs={5} style={{ fontWeight: "700", fontSize: "18px", textAlign: "start" }}>{`Итого ${sumPrice}`}</Col>
+				<Col xs={12} style={{ fontWeight: "700", fontSize: "18px", textAlign: "start" }}>Корзина</Col>
 			</Row>
 
 			<Row className='align-items-center'>
@@ -44,26 +29,21 @@ const Basket = () => {
 			{
 				basketArr.map(e => {
 					return (
-						<Row className='align-items-center' ml-1 key={e._id}>
-							<Col xs={1} style={{ minWidth: "80px" }}><img width="60px" src={e.img} /></Col>
-							<Col xs={2} style={{ fontSize: "12px", textAlign: "center" }}>{e.name}</Col>
-							<Col xs={1} style={{ fontSize: "12px", textAlign: "center" }}>{e.stock}</Col>
-							<Col xs={1} style={{ fontSize: "12px", textAlign: "center" }}>{e.price}</Col>
-							<Col xs={1} style={{ fontSize: "12px", textAlign: "center" }}>{e.discount}%</Col>
-							<Col xs={1} style={{ fontSize: "12px", textAlign: "center" }}>{(e.price * (100 - e.discount)) / 100}</Col>
-							<Col xs={2} style={{ fontSize: "12px", textAlign: "center" }}><BasketProducts stockinBasket={e.stockinBasket} id={e._id} /></Col>
-							<Col xs={1} style={{ fontSize: "12px", textAlign: "center" }}>{e.stockinBasket}</Col>
-							<Col xs={1} style={{ fontSize: "16px", color: "crimson", textAlign: "center" }}><XCircleFill style={{ cursor: "pointer" }} onClick={
-								x => {
-									x.preventDefault()
-									x.stopPropagation()
-									setBasketArr(old => old.filter(y => y._id !== e._id))
-								}
-							} /></Col>
-
-						</Row>)
+						<BasketProducts {...e} setSumPrice={setSumPrice} />
+					)
 				})
 			}
+			<Row className='align-items-center mt-2'>
+
+				<Col xs={4} style={{ fontWeight: "700", fontSize: "18px", textAlign: "start" }}><Button size='sm' variant='danger' onClick={
+					(e) => {
+						setBasketArr([])
+						navigate("/catalog")
+					}
+				}>Удалить все из корзины</Button></Col>
+				<Col xs={4} style={{ fontWeight: "700", fontSize: "18px", textAlign: "center" }}>{`Итого ${sumPrice} р.`}</Col>
+				<Col xs={4} style={{ fontWeight: "700", fontSize: "18px", textAlign: "end" }}><Button size='sm' variant='success'>Перейти к оформлению</Button></Col>
+			</Row>
 		</Row >
 	);
 }
