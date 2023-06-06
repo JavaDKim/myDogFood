@@ -19,9 +19,11 @@ const BasketProducts = ({ stockinBasket, _id, img, name, stock, price, discount,
 			}
 		})
 	}, [basketArr, stockIn]);
+
 	return (
 
 		<Row className='align-items-center' key={_id}>
+
 			<Col xs={1} style={{ minWidth: "80px" }}><Link title='перейти в карточку продукта' to={`/product/${_id}`}> <img width="60px" src={img} alt='фото продукции' /></Link></Col>
 			<Col xs={2} style={{ fontSize: "12px", textAlign: "center" }}><Link title='перейти в карточку продукта' style={{ color: "purple" }} to={`/product/${_id}`}>{name}</Link> </Col>
 			<Col xs={1} style={{ fontSize: "12px", textAlign: "center" }}>{stock}</Col>
@@ -52,6 +54,7 @@ const BasketProducts = ({ stockinBasket, _id, img, name, stock, price, discount,
 					setBasketArr(old => old.filter(y => y._id !== _id))
 				}
 			} /></Col>
+
 		</Row>
 	);
 }
